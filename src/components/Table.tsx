@@ -43,6 +43,8 @@ export default function Table() {
   }
   apiCall();
   return (
+    <div className="flex justify-center">
+
     <table>
       <thead>
         <tr>
@@ -54,5 +56,6 @@ export default function Table() {
       </thead> 
       <tbody>{coins.map(createTableRow)}</tbody>
     </table>
+    </div>
   );
 }
