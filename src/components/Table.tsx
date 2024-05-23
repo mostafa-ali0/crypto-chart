@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import styles from "@/app/styles/tablestyle.module.css"
 import TableRow from "./TableRow";
 import { useEffect, useState } from "react";
 import { setInterval } from "timers";
@@ -23,7 +24,7 @@ function createTableRow(coin: any) {
     <TableRow
       key={coin.item.name}
       name={coin.item.name}
-      price={coin.item.data.price}
+      price={Number(coin.item.data.price).toFixed(3)}
       picUrl={coin.item.thumb}
       sparkline={coin.item.data.sparkline}
     />
@@ -55,9 +56,9 @@ export default function Table() {
         <table>
           <thead>
             <tr>
-              <th>Img</th>
-              <th>Name</th>
-              <th>Price</th>
+              <th></th>
+              <th className={styles.name}>Name</th>
+              <th>Price (usd)</th>
               <th>Sparkline</th>
             </tr>
           </thead>

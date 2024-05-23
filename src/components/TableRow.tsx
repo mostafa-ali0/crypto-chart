@@ -1,4 +1,4 @@
-
+import styles from "@/app/styles/tablestyle.module.css"
 
 export default function TableRow(props: any) {
   return (
