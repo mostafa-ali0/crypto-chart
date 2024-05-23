@@ -1,7 +1,11 @@
 "use client";
 import axios from "axios";
 import TableRow from "./TableRow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { setInterval } from "timers";
+import data from "./sample-data.js";
+
+const sampleCoinsData = data.coins;
 
 const APIKey = "CG-eTCQgwN1jvEF12x81xRdGtwD";
 const apiRootURL = "https://api.coingecko.com/api/v3/";
@@ -13,8 +17,6 @@ const options = {
     "x-cg-demo-api-key": "CG-eTCQgwN1jvEF12x81xRdGtwD",
   },
 };
-
-// let coins: any[];
 
 function createTableRow(coin: any) {
   return (
@@ -30,32 +32,39 @@ function createTableRow(coin: any) {
 
 export default function Table() {
   let [coins, setCoins] = useState([]);
-  async function apiCall() {
+  let [load, setLoad] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
     try {
       const response = await axios.request(options);
       const data = response.data;
-      // coins = data.coins;
       setCoins(data.coins);
-      // console.log(coins);
+      setLoad(false);
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   }
-  apiCall();
-  return (
-    <div className="flex justify-center">
 
-    <table>
-      <thead>
-        <tr>
-          <th>Img</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Sparkline</th>
-        </tr>
-      </thead> 
-      <tbody>{coins.map(createTableRow)}</tbody>
-    </table>
+  return (
+    <div>
+      <div className="flex justify-center">
+        <table>
+          <thead>
+            <tr>
+              <th>Img</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Sparkline</th>
+            </tr>
+          </thead>
+          <tbody>{!load && coins.map(createTableRow)}</tbody>
+        </table>
+      </div>
+      <div className="flex justify-center text-4xl my-[5rem]">{load && <h1>Loading...</h1>}</div>
     </div>
   );
 }
