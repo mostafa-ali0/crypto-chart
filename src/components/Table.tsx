@@ -1,9 +1,21 @@
 "use client";
 import axios from "axios";
 import styles from "@/app/styles/tablestyle.module.css"
-import TableRow from "./TableRow";
+// import TableRow from "./TableRow";
 import { useEffect, useState } from "react";
 import data from "./sample-data.js";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import Image from "next/image.js";
+import { LoadingSpinner } from "./ui/loadingspinner";
 
 const sampleCoinsData = data.coins;
 
@@ -19,27 +31,35 @@ const options = {
 };
 
 function createTableRow(coin: any) {
+  let price = `$${Number(coin.item.data.price).toFixed(5)}`;
   return (
     <TableRow
-      key={coin.item.name}
-      name={coin.item.name}
-      price={Number(coin.item.data.price).toFixed(3)}
-      picUrl={coin.item.thumb}
-      sparkline={coin.item.data.sparkline}
-    />
+    key={coin.item.name}
+    >
+      <TableCell>
+        <div className="flex ml-[50px]">
+          <img src={coin.item.thumb} alt={coin.item.name} className="rounded-[50%]"/>
+          <p className="my-auto ml-6 bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-fuchsia-500">{coin.item.name}</p>
+        </div>
+      </TableCell>
+      <TableCell>{price}</TableCell>
+      <TableCell>
+        <img src={coin.item.data.sparkline} alt={coin.item.name} />
+      </TableCell>
+    </TableRow>
   );
 }
 
-export default function Table() {
+export default function TableMine() {
   let [coins, setCoins] = useState([]);
   let [load, setLoad] = useState(true);
 
-  // useEffect(() => {
-  //   setTimeout(fetchData, 5000);
-  // }, []);
   useEffect(() => {
-    fetchData();
+    setTimeout(fetchData, 1000);
   }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   async function fetchData() {
     try {
@@ -54,21 +74,24 @@ export default function Table() {
   }
 
   return (
-    <div className="">
-      <div className="flex justify-center">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th className={styles.name}>Name</th>
-              <th>Price (usd)</th>
-              <th>Sparkline</th>
-            </tr>
-          </thead>
-          <tbody>{!load && coins.map(createTableRow)}</tbody>
-        </table>
-      </div>
-      {/* <div className="flex justify-center text-4xl my-[5rem]">{load && <h1>Loading...</h1>}</div> */}
+    <div className="w-[60vw] flex justify-center mx-auto">
+      {load ? 
+      <LoadingSpinner 
+      className="h-[30vh] w-[30vw]"
+      /> 
+      : 
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="pl-[70px]">Name</TableHead>
+            <TableHead>Price $USD</TableHead>
+            <TableHead>Sparkline</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {coins.map(createTableRow)}
+        </TableBody>
+      </Table>}
     </div>
   );
 }
