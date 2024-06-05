@@ -1,7 +1,5 @@
 import NavBar from '@/components/NavBar'
 import Table from '@/components/Table'
-import React, { Suspense } from 'react'
-import Loading from './loading11111'
 
 export default function Trending() {
   return (

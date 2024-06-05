@@ -1,7 +1,5 @@
 "use client";
 import axios from "axios";
-import styles from "@/app/styles/tablestyle.module.css"
-// import TableRow from "./TableRow";
 import { useEffect, useState } from "react";
 import data from "./sample-data.js";
 import {
