@@ -3,7 +3,6 @@ import axios from "axios";
 import styles from "@/app/styles/tablestyle.module.css"
 import TableRow from "./TableRow";
 import { useEffect, useState } from "react";
-import { setInterval } from "timers";
 import data from "./sample-data.js";
 
 const sampleCoinsData = data.coins;
@@ -35,6 +34,9 @@ export default function Table() {
   let [coins, setCoins] = useState([]);
   let [load, setLoad] = useState(true);
 
+  // useEffect(() => {
+  //   setTimeout(fetchData, 5000);
+  // }, []);
   useEffect(() => {
     fetchData();
   }, []);
@@ -44,6 +46,7 @@ export default function Table() {
       const response = await axios.request(options);
       const data = response.data;
       setCoins(data.coins);
+      // setCoins(sampleCoinsData);
       setLoad(false);
     } catch (error) {
       console.log(error);
@@ -51,7 +54,7 @@ export default function Table() {
   }
 
   return (
-    <div>
+    <div className="">
       <div className="flex justify-center">
         <table>
           <thead>
@@ -65,7 +68,7 @@ export default function Table() {
           <tbody>{!load && coins.map(createTableRow)}</tbody>
         </table>
       </div>
-      <div className="flex justify-center text-4xl my-[5rem]">{load && <h1>Loading...</h1>}</div>
+      {/* <div className="flex justify-center text-4xl my-[5rem]">{load && <h1>Loading...</h1>}</div> */}
     </div>
   );
 }

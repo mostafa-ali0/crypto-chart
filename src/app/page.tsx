@@ -1,14 +1,16 @@
 import Image from "next/image";
 import Table from "@/components/Table";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import NavBar from "@/components/NavBar";
+import HomePageHero from "@/components/HomePageHero";
 
 export default function Home() {
   return (
-    <>
-    <div>
-    <h1 className="m-[10px] my-[3rem] flex justify-center content-center font-mono text-4xl">Trending Crypto Currencies</h1>
+    <div className="">
+      <NavBar />
+      <HomePageHero />
     </div>
-    <Table />
-    <p>Data provided by CoinGecko API</p>
-    </>
   );
 }
