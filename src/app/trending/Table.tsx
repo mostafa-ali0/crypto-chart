@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import data from "./sample-data.js";
+import data from "../../../public/sample-data.js";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import Image from "next/image.js";
-import { LoadingSpinner } from "./ui/loadingspinner";
+import { LoadingSpinner } from "@/components/ui/loadingspinner";
 
 const sampleCoinsData = data.coins;
 
@@ -52,12 +52,12 @@ export default function TableMine() {
   let [coins, setCoins] = useState([]);
   let [load, setLoad] = useState(true);
 
-  useEffect(() => {
-    setTimeout(fetchData, 1000);
-  }, []);
   // useEffect(() => {
-  //   fetchData();
+  //   setTimeout(fetchData, 1000);
   // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   async function fetchData() {
     try {
